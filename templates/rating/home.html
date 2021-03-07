@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="panel panel-default">
+            {% if polls %}
+                <div class="panel-heading">
+                    <h3 class="panel-title c-brand-0">Today's Presenter</h3>
+                </div>
+            {% endif %}
+
+            <ul class="list-group">
+                {% for poll in polls %}
+                    <div class="card" style="display: flex; justify-content: space-between; padding-right: 10px;">
+                        {% if poll.image %}
+                            <img src="{{ poll.image.url }}" width="200",  height="auto">
+                        {% else %}
+                            <img src="{% static 'img/no-img-m.jpg' %}" width="200", height="auto">
+                        {% endif %}
+                        <div class=" col-lg-4">
+                            <h3>{{ poll.title }}</h3>
+                            <p> {{ poll.description }}</p>
+                        </div>
+                        <div class="card col-lg-4">
+                            
+                        </div>
+                    </div>
+                    <li class="list-group-item">
+                        <strong>{{ poll.question }}</strong>
+                        <span class="pull-right">
+                            <a href="{% url 'vote' poll.pk %}" class="btn btn-info btn-xs">Rate</a> &nbsp;
+                            <a href="{% url 'results' poll.pk %}" class="btn btn-default btn-xs">View Results</a> &nbsp;
+                        </span>
+                    </li>
+                {% empty %}
+                    <div class="panel-heading panel">
+                        <h1 class="c-brand-0 align-c"> There Is No Active Seminar </h1>
+                    </div>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
